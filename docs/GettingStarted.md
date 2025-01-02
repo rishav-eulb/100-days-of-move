@@ -151,7 +151,7 @@ movement account fund-with-faucet --faucet-url https://faucet.testnet.bardock.mo
 
 To fund a given account from movement faucet. This command can be invoked in case the user is lacking funds for deployment and carrying other essential operations in devnet or testnet.
 
-**Note-**
+**Note:**
 _The faucet command is only available for testnet and devnet._
 
 ## Resources<a id="resources"></a>
