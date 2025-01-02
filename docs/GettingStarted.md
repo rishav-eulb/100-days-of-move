@@ -38,6 +38,17 @@ Post successful installation of Cargo and Rust the following output should be sh
 Rust is installed now. Great!
 ```
 
+Apart from installing Rust, kindly ensure these other dependencies are also live and up-to-date. Feel free to raise a query in issues section in case of any blockers.
+
+* CMake
+* Clang
+* grcov
+* lcov
+* pkg-config
+* libssl-dev
+* protoc (and related tools)
+* lld (only for Linux)
+
 ### Step 3 - Build Movement CLI
 
 Run the cargo command to build movement CLI.
