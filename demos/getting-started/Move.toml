@@ -1,0 +1,16 @@
+[package]
+name = "hello_movement"
+version = "1.0.0"
+authors = []
+
+[addresses]
+movement="0xba05b4d0b58763d566e807e75ec526c87a4a5645da406ccd6cf70309f1154f8a"
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dev-dependencies]
