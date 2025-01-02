@@ -126,6 +126,9 @@ movement move init --name hello_movement
 
 Here hello_movement is the name of the Move module. The CLI is well-diversified, and one could try out various other options present in the toolkit. To explore the project directory, one can refer to this [folder](../demos/getting-started).
 
+**Note:**
+_The private key added in the demo folder is just for experimental purpose. It is strongly recommended to create your own private key for project setup, also never expose your private key publicly or commit it to any repository._
+
 ### Additional Commands
 
 There are many more usecases which can be fulfilled by **Movement CLI** each of which are shown below:
@@ -147,6 +150,9 @@ movement account fund-with-faucet --faucet-url https://faucet.testnet.bardock.mo
 ```
 
 To fund a given account from movement faucet. This command can be invoked in case the user is lacking funds for deployment and carrying other essential operations in devnet or testnet.
+
+**Note:**
+_The faucet command is only available for testnet and devnet._
 
 ## Resources<a id="resources"></a>
 
