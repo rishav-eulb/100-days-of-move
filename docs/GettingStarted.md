@@ -122,4 +122,3 @@ Here `hello_movement` is the name of the move module. The CLI is well diverse an
 - [Setup Movement CLI](https://docs.movementnetwork.xyz/devs/movementcli)
 - [Cargo and Rust Setup](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 - [Movement Network Endpoints](https://docs.movementnetwork.xyz/devs/networkEndpoints)
--
