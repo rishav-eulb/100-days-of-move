@@ -5,3 +5,9 @@ This repo contains the code and the instructions to get started with Move Langua
 ### How to use the repo?
 - **Docs**: It'll contail detail documentation on how to build and use the codebase. 
 - **Demos**: It'll contain all the code and modules that one can use.
+
+## Index
+
+| **Progress**   | **Topic** | **Reference** |
+| -------- | ------- | ------- |
+| Day 1 | Getting Started With Move | [GettingStarted.md](docs/GettingStarted.md) |
