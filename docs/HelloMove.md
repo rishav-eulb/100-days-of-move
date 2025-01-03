@@ -20,7 +20,7 @@ movement move test --dev
 
 You should get the following output if everything works right.
 
-![](assets/20250103_231632_image.png)
+![](assets/20250103_235709_image.png)
 
 As one can see the unit test `0x2::thoughts::test_basic_flow` has passed and we are ready for deployment.
 
@@ -310,7 +310,7 @@ module HelloMove::thoughts {
 
 This is how our final code should look like after we have incorporated all the changes.
 
-# The Jargons
+# Jargons
 
 ### Move.toml
 
