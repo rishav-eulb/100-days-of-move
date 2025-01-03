@@ -2,7 +2,31 @@
 
 Once movement CLI is all setup we can proceed with writing our first move package called _**Hello Move**_. `Hello Move` will be our first revolutionary notes dapp on movement ecosystem where users can post their notes and view them. Think it of a dapp where you can jot down your own thought of the day for the whole world to see.
 
-## Setting up Move Package
+# Running your First Move Code
+
+### Setup Your Project.
+
+- Go to [hello-move](../demos/hello-move/)
+- Once in the folder run `movement init` to setup your repository.
+- Then you can run the the test command to run the unit test.
+
+### Checking if it Works
+
+In order to check if everything works, we will run the test command.
+
+```bash
+movement move test --dev
+```
+
+You should get the following output if everything works right.
+
+![](assets/20250103_231632_image.png)
+
+As one can see the unit test `0x2::thoughts::test_basic_flow` has passed and we are ready for deployment.
+
+# Understanding your Code
+
+## Understanding the HelloMove Package
 
 First one will run the following command in their terminal.
 
@@ -33,9 +57,7 @@ Post all the steps one can see the folder structure as shown above. Don't worry 
 
 *If not mentioned anything during compilation, movement CLI will take the above structure as the default values for `PACKAGE_DIR` and `OUTPUT_DIR` however it is not recommended to do the same if one is not well versed with the CLI*
 
-# Writing your First Move Code
-
-# Updating Move.toml
+## Understanding Move.toml
 
 Within the **PROJECT_ROOT** go to `Move.toml` and add the following details under `[addresses]` section.
 
@@ -83,7 +105,7 @@ subdir = "aptos-move/framework/aptos-framework"
 
 ```
 
-### Thoughts Module
+## Understanding Thoughts Module
 
 As part of our `HelloMove` package we will create our first module called this `thoughts` module. This module will store all the thoughts for a given user and allow various users to view each other thoughts.
 
@@ -196,7 +218,7 @@ module HelloMove::thoughts {
 
 Now any user can publish there thoughts and can view their own and other's thoughts given that they know the user's account address.
 
-### Testing it Out
+## Understanding Unit Tests
 
 Before publishing anything to production we need to test everything is working fine and for that we will leverage the wonderful `Movement` unit testing framework.
 
@@ -288,21 +310,7 @@ module HelloMove::thoughts {
 
 This is how our final code should look like after we have incorporated all the changes.
 
-### Checking if it Works
-
-Finally we will run the unit test to see if everything is working. Move back to the **PROJECT_ROOT** and run the following command.
-
-```bash
-movement move test --dev
-```
-
-You should get the following output if everything works right.
-
-![](assets/20250103_231632_image.png)
-
-As one can see the unit test `0x2::thoughts::test_basic_flow` has passed and we are ready for deployment.
-
-# Understanding the Basics
+# The Jargons
 
 ### Move.toml
 

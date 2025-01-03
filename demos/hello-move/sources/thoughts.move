@@ -23,7 +23,7 @@ module HelloMove::thoughts {
     #[test(aaron = @0xcafe)]
     fun test_basic_flow(aaron: &signer) acquires MyResource {
         // Create a thought for aaron.
-        let thought = b"Hello World";
+        let thought = b"Hello Move";
 
         // Store it to the blockchain.
         create_thoughts(aaron, string::utf8(thought));
@@ -34,7 +34,7 @@ module HelloMove::thoughts {
         // Get the thought at his address.
         let aaron_thought = get_thoughts(aaron_address); 
 
-        // Check if the thought present at that address is actually "Hello World"
-        assert!(aaron_thought == string::utf8(b"Hello World"), 1);
+        // Check if the thought present at that address is actually "Hello Move"
+        assert!(aaron_thought == string::utf8(b"Hello Move"), 1);
     }
 }
