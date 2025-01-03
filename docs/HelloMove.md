@@ -365,6 +365,8 @@ We have barely touched any of the concept in detail and it could be overwhelming
 
 Meanwhile, get ready with your code and make sure it has passed all the test-cases, because we are gonna deploy it tomorrow and test it out on the real blockchain.
 
+Feel free to reach out to us and refer to [hello-move](../demos/hello-move) in case you are stuck somewhere.
+
 # Resources<a id="resources"></a>
 
 - [Understanding Move.toml](https://aptos.dev/en/build/smart-contracts/book/packages#movetoml)
