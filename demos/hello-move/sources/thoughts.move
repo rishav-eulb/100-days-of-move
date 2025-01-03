@@ -1,6 +1,7 @@
 module HelloMove::thoughts {
     use std::string;
     use std::signer;
+    use std::debug::print;
 
     struct MyResource has key {
         thought: string::String
@@ -33,6 +34,9 @@ module HelloMove::thoughts {
 
         // Get the thought at his address.
         let aaron_thought = get_thoughts(aaron_address); 
+
+        // Print your thought
+        print(&aaron_thought);
 
         // Check if the thought present at that address is actually "Hello Move"
         assert!(aaron_thought == string::utf8(b"Hello Move"), 1);

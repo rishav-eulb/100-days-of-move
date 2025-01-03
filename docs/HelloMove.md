@@ -26,7 +26,7 @@ As one can see the unit test `0x2::thoughts::test_basic_flow` has passed and we 
 
 # Understanding your Code
 
-## Understanding the HelloMove Package
+## Creating the HelloMove Package
 
 First one will run the following command in their terminal.
 
@@ -57,7 +57,7 @@ Post all the steps one can see the folder structure as shown above. Don't worry 
 
 *If not mentioned anything during compilation, movement CLI will take the above structure as the default values for `PACKAGE_DIR` and `OUTPUT_DIR` however it is not recommended to do the same if one is not well versed with the CLI*
 
-## Understanding Move.toml
+## Modifying Move.toml
 
 Within the **PROJECT_ROOT** go to `Move.toml` and add the following details under `[addresses]` section.
 
@@ -105,7 +105,7 @@ subdir = "aptos-move/framework/aptos-framework"
 
 ```
 
-## Understanding Thoughts Module
+## Developing Thoughts Module
 
 As part of our `HelloMove` package we will create our first module called this `thoughts` module. This module will store all the thoughts for a given user and allow various users to view each other thoughts.
 
@@ -218,7 +218,7 @@ module HelloMove::thoughts {
 
 Now any user can publish there thoughts and can view their own and other's thoughts given that they know the user's account address.
 
-## Understanding Unit Tests
+## Creating Unit Tests
 
 Before publishing anything to production we need to test everything is working fine and for that we will leverage the wonderful `Movement` unit testing framework.
 
