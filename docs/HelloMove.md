@@ -22,7 +22,7 @@ You should get the following output if everything works right.
 
 ![](assets/20250103_235709_image.png)
 
-As one can see the unit test `0x2::thoughts::test_basic_flow` has passed and we are ready for deployment.
+As one can see the unit test `0x2::thoughts::test_basic_flow` has passed printing `"Hello Move"` thought and are ready for deployment.
 
 # Understanding your Code
 
@@ -242,7 +242,7 @@ Within the test function we have added a `signer` called `aaron` whose address i
 Well first create aaron's thought.
 
 ```Move
-let thought = b"Hello World";
+let thought = b"Hello Move";
 ```
 
 Now, once thought as been created we need to add to the global storage. Since the thought is in bytes format we need to convert it to string using `string::utf8` function. Using aaron's signer we store his thought to the blockchain at aaron's address.
@@ -257,13 +257,13 @@ Now, we need to fetch aaron's address from his signer using `signer::address_of`
 let aaron_address = signer::address_of(aaron); 
 ```
 
-Once we have fetched the address we need to check that the thought stored at the address actually matches with `"Hello World"`.
+Once we have fetched the address we need to check that the thought stored at the address actually matches with `"Hello Move"`.
 
 ```Move
-assert!(aaron_thought == string::utf8(b"Hello World"), 1);
+assert!(aaron_thought == string::utf8(b"Hello Move"), 1);
 ```
 
-We call `assert!` function with the condition `aaron_thought == string::utf8(b"Hello World")` if the equality fails then the unit test will abort alerting something is wrong with our code.
+We call `assert!` function with the condition `aaron_thought == string::utf8(b"Hello Move")` if the equality fails then the unit test will abort alerting something is wrong with our code.
 
 ```Move
 module HelloMove::thoughts {
@@ -291,7 +291,7 @@ module HelloMove::thoughts {
     #[test(aaron = @0xcafe)]
     fun test_basic_flow(aaron: &signer) acquires MyResource {
         // Create a thought for aaron.
-        let thought = b"Hello World";
+        let thought = b"Hello Move";
 
         // Store it to the blockchain.
         create_thoughts(aaron, string::utf8(thought));
@@ -302,8 +302,8 @@ module HelloMove::thoughts {
         // Get the thought at his address.
         let aaron_thought = get_thoughts(aaron_address); 
 
-        // Check if the thought present at that address is actually "Hello World"
-        assert!(aaron_thought == string::utf8(b"Hello World"), 1);
+        // Check if the thought present at that address is actually "Hello Move"
+        assert!(aaron_thought == string::utf8(b"Hello Move"), 1);
     }
 }
 ```
