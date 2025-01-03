@@ -19,10 +19,22 @@ module HelloMove::thoughts {
         borrow_global<MyResource>(user).thought
     }
 
+    // We should test everything before pushing to prod.
     #[test(aaron = @0xcafe)]
     fun test_basic_flow(aaron: &signer) acquires MyResource {
-        let aaron_address = signer::address_of(aaron);
-        create_thoughts(aaron, string::utf8(b"Hello World"));
-        assert!(get_thoughts(aaron_address) == string::utf8(b"Hello World"), 1);
+        // Create a thought for aaron.
+        let thought = b"Hello World";
+
+        // Store it to the blockchain.
+        create_thoughts(aaron, string::utf8(thought));
+
+        // Fetch aaron's address
+        let aaron_address = signer::address_of(aaron); 
+
+        // Get the thought at his address.
+        let aaron_thought = get_thoughts(aaron_address); 
+
+        // Check if the thought present at that address is actually "Hello World"
+        assert!(aaron_thought == string::utf8(b"Hello World"), 1);
     }
 }

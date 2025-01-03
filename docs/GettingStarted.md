@@ -96,10 +96,10 @@ Configuring for profile default
 Choose network from [devnet, testnet, local, custom | defaults to devnet]. For testnet, start over and run movement init --skip-faucet
 custom
 Enter your rest endpoint [Current: None | No input: Exit (or keep the existing if present)]
-https://aptos.testnet.porto.movementlabs.xyz/v1
+https://aptos.testnet.bardock.movementlabs.xyz/v1
 
 Enter your faucet endpoint [Current: None | No input: Skip (or keep the existing one if present) | 'skip' to not use a faucet]
-https://fund.testnet.porto.movementlabs.xyz/
+https://fund.testnet.bardock.movementlabs.xyz/
 
 Enter your private key as a hex literal (0x...) [Current: None | No input: Generate new key (or keep one if present)]
 0x<YOUR_PRIVATE_KEY>
