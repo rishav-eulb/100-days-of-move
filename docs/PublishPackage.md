@@ -44,7 +44,7 @@ Transaction submitted: https://explorer.movementlabs.xyz/txn/0x45bdd664187115255
 Congrats on publishing your first move module!
 
 ## Interact with the module
-- To see your module you can go to the [explorer](https://explorer.testnet.porto.movementnetwork.xyz/?network=testnet) and enter your address.
+- To see your module you can go to the [explorer](https://explorer.testnet.porto.movementnetwork.xyz/?network=testnet) and enter your address that you mentiond in Move.toml.
 - You should see something like this
 ![](assets/explorer_hello_move.png)
 - The module is published on your address.
@@ -101,7 +101,7 @@ Congrats! You just created a tx using movement cli as well
 ```
 movement move view --function-id <Address_created>::thoughts::get_thoughts --args address:<Address_created>
 ```
-- You'll see the following output on the cli
+- You'll see the following output on the cli. _The below output is what I entered as my thought_
 ```
 {
   "Result": [
@@ -109,3 +109,12 @@ movement move view --function-id <Address_created>::thoughts::get_thoughts --arg
   ]
 }
 ```
+
+## Summary
+After this tutorial you'll be able to do following things:
+1. Publish your own modules
+2. Store a variable mapped to account address
+3. Read the variable mapped to account address
+4. Use movement explorer to interact with move contracts
+
+Let's continue building on this and move forward with our 100 days of move!
