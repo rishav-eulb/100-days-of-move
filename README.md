@@ -12,4 +12,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | -------- | ------- | ------- | ------- |
 | Day 1 | Getting Started With Move | [GettingStarted.md](docs/GettingStarted.md) | [getting-started](demos/getting-started/)
 | Day 2 | Writing Your First Move Package | [HelloMove.md](docs/HelloMove.md) | [hello-move](demos/hello-move/)
-| Day 3 | Publishing Your First Move Package | [HelloMove.md](docs/PublishPackage.md) | [hello-move](demos/hello-move/)
+| Day 3 | Publishing Your First Move Package | [PublishPackage.md](docs/PublishPackage.md) | [hello-move](demos/hello-move/)
