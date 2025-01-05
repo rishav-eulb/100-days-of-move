@@ -66,7 +66,7 @@ Move is a strongly typed language and also gives you control on what all operati
 - copy - Any type having copy ability and be copied across multiple variables.
 - drop - Any type having drop ability can be dropped from memory without being explicity unpacked.
 
-In our example above `MyResource` has `key` ability because which allows us to add it to the Global Storage. Removing the `key` ability will cause failure in compilation of our program as it would no longer have the permission to store `MyResource` to the Global Storage.
+In our example above `MyResource` has `key` ability which allows us to add it to the Global Storage. Removing the `key` ability will cause failure in compilation of our program as it would no longer have the permission to store `MyResource` to the Global Storage.
 
 ![](assets/20250105_123156_image.png)
 
