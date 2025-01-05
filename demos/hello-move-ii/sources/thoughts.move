@@ -22,6 +22,7 @@ module HelloMove::thoughts {
         // Throw error if it does.
         assert!(!thought_already_exists, error::already_exists(E_THOUGHT_ALREADY_EXIST));
 
+        // Move the resource to the global storage.
         move_to<MyResource>(author, MyResource {
             thought: thought
         });
@@ -36,16 +37,22 @@ module HelloMove::thoughts {
         // Throw error if it does not.
         assert!(thought_already_exists, error::not_found(E_THOUGHT_NOT_FOUND));
 
-
+        // Borrow an immutable reference and return a copy for the thought
         borrow_global<MyResource>(user).thought
     }
 
 
     public entry fun delete_thoughts(author: &signer) acquires MyResource {
+        // Get address of author.
         let author_address = signer::address_of(author);
 
-        let _ = get_thoughts(author_address);
+        // Check if there is a thought present under author's address.
+        let thought_already_exists = exists<MyResource>(author_address);
 
+        // Throw error if it does not.
+        assert!(thought_already_exists, error::not_found(E_THOUGHT_NOT_FOUND));
+
+        // Remove the resource from the address.
         move_from<MyResource>(author_address);
     }
 
@@ -54,13 +61,16 @@ module HelloMove::thoughts {
         // Check if there is a thought present under author's address.
         let author_address = signer::address_of(author);
 
+        // Check if there is a thought present under author's address.
         let thought_already_exists = exists<MyResource>(author_address);
 
         // Throw error if it does not.
         assert!(thought_already_exists, error::not_found(E_THOUGHT_NOT_FOUND));
 
-
+        // Get an mutable reference for the thought at author's address.
         let author_thought = borrow_global_mut<MyResource>(author_address);
+
+        // Edit the thought, since it is a mutable reference the resource will be updated automatically.
         author_thought.thought = thought;
     }
 
@@ -104,7 +114,7 @@ module HelloMove::thoughts {
         assert!(edited_aaron_thought == string::utf8(b"Hello Movement"), 2);
     }
 
-    // Test if we are able to edit our thoughts
+    // Test if we are able to delete our thoughts
     #[test(aaron = @0xcafe)]
     #[expected_failure(abort_code = 0x60002, location = HelloMove::thoughts)]
     fun test_delete_flow(aaron: &signer) acquires MyResource {

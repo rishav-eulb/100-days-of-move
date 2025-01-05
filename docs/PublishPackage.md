@@ -2,7 +2,7 @@
 
 On [day 2](https://github.com/code-xD/100-days-of-move/blob/main/docs/HelloMove.md) we learnt how to create your first module. Today we'll publish the module on the [Movement Porto testnet](https://explorer.testnet.porto.movementnetwork.xyz/) and interact with it using cli and explorer.
 
-## Publishing the module
+## Publishing the module<a id = "publish-package-publish-your-module"></a>
 - To publish the module that we created we first need to go inside the folder
 ```
 cd demos/hello-move

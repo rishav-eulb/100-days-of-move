@@ -6,7 +6,7 @@ authors = []
 [addresses]
 aptos_framework = "0x1"
 std = "0x1"
-HelloMove = "0xba05b4d0b58763d566e807e75ec526c87a4a5645da406ccd6cf70309f1154f8a"
+HelloMove = "_"
 
 [dev-addresses]
 HelloMove = "0x2"
