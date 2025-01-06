@@ -14,3 +14,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 2 | Writing Your First Move Package | [HelloMove.md](docs/HelloMove.md) | [hello-move](demos/hello-move/)
 | Day 3 | Publishing Your First Move Package | [PublishPackage.md](docs/PublishPackage.md) | [hello-move](demos/hello-move/)
 | Day 4 | Understanding Storage | [UnderstandingStorage.md](docs/UnderstandingStorage.md) | [hello-move-ii](demos/hello-move-ii/)
+| Day 5 | Move Basics: Variables, References and More | [VariablesBasics.md](docs/VariablesBasics.md) | -
