@@ -12,7 +12,7 @@ Like any other programming lanuage, we can declare and intialize variables in Mo
 let x: u8 = 1;
 ```
 
-Here, we have defined a variable `x` of type `u8` with an assigned variable of `1`.
+Here, we have defined a variable `x` of type `u8` with an assigned value of `1`.
 
 Apart from that, one can declare and define variables separately, making it useful in case of conditional assignments like shown below.
 
@@ -86,7 +86,7 @@ let Test{x: y} = x;
 let y = x; // ERROR variable has moved from x
 ```
 
-Similarly there are many more scenarios of unpacking where we can to unpack a variable and use the value of it's field further. In case the user's don't want to use a particular field values then they can use `_` to drop the field value.
+Similarly there are many more scenarios of unpacking where we cannot unpack a variable and use the value of it's field further. In case the user's don't want to use a particular field values then they can use `_` to drop the field value.
 
 ```Move
 struct Test2 {
@@ -105,7 +105,7 @@ let Test2{x: x1, y: _} = test; // value of test is moved where x1 has test.x val
 
 As one can see in the example above value of test has moved to the anonymous declaration where `x1` has value of `test.x` however, value of `test.y` has been dropped since it's not assigned to any variable.
 
-There are lot more use-cases where one can unpacking to assign subtypes to different variables.
+There are lot more use-cases where one can unpack to assign subtypes to different variables.
 
 Also, note that, any struct without any ability is defined as a Resource since they cannot be copied or dropped post initialization and there ownership has to be transferred. As we have seen the numerous examples above we had to explicity unpack the struct variables in order to transfer there ownership.
 
@@ -219,7 +219,7 @@ fun inner(t1: Test) {
 fun test() {
     let t = Test{x: 1};
     inner(t)
-    t.x = 2; // Throws error since t has been moved to t1.
+    t.x = 1; // Throws error since t has been moved to t1.
 }
 
 ```
@@ -235,6 +235,25 @@ struct Test has copy {
 
 We would see that the error at line `t.x = 2` would no longer exist. This is because Move has implicitly understood that value of `t` should be copied to `t1` and not moved.
 
+## Type casting
+In move, you can't perform operations of different types
+```
+fun plus_two_types(): u64 {
+    let x: u8 = 10;
+    let y: u32 = 12;
+    x + y // x and y are different types -> failed to compile
+}
+```
+
+You'll need to convert the variable to be of same type
+```
+fun plus_two_types(): u64 {
+    let x: u8 = 10;
+    let y: u32 = 12;
+    (x as u32) + y // This will work as x and y are of same type
+}
+```
+
 ## Summary
 
 Today, we learned about:
@@ -242,6 +261,7 @@ Today, we learned about:
 - How to declare and unpack variables.
 - How to declare and use references.
 - Talked about Move and Copy ability in further detail.
+- Understood type casting.
 
 ## Resources <a id = "resources-variables-basics"></a>
 
