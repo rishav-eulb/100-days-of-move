@@ -21,7 +21,7 @@ Eg:
 fun foo<T1, T2>(x: u64, y: T1, z: T2): (T2, T1, u64) { (z, y, x) }
 ```
 ### Internal function
-All functions in move modules are internal by default,i.e., they can only be called by other functions inside the module
+All functions in move modules are internal(private) by default,i.e., they can only be called by other functions inside the same module
 Example: In file [friend_1.move](/demos/functions/sources/friend_1.move)
 ```js
     // This function can only be called from other functions in friend_1
@@ -30,7 +30,10 @@ Example: In file [friend_1.move](/demos/functions/sources/friend_1.move)
     }
 ```
 ### Public functions
-When you add public in front of any other func it can be called from any other module as well
+When you add public in front of any other func it can be called from any other module as well. Public functions can be called by:
+- other functions defined in the same module
+- functions defined in another module
+
 Example: In file [friend_1.move](/demos/functions/sources/friend_1.move)
 ```js
     // This function can be called from any module
@@ -41,11 +44,14 @@ Example: In file [friend_1.move](/demos/functions/sources/friend_1.move)
     }
 ```
 ### Public friend functions
-You can also define which module can call your functions by using a keyword `friend`
+You can also define which module can call your functions by using a keyword `friend`. This will add extra layer of check. It can be called by:
+- other functions defined in the same module
+- functions defined in modules which are explicitly specified in the friend list 
+
 Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
 ```js   
     module friends::friend_2{
-        friend friends::friend_1; // I mentioned who can call this module
+        friend friends::friend_1; // friend_1 module can call the friend functions but no other module can call them
         public(friend) fun get_age(friend_address: address): u64 acquires Information {
             let name_exists = exists<Information>(friend_address);
             assert!(name_exists, error::not_found(E_ADDRESS_NOT_FOUND));
@@ -56,7 +62,7 @@ Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
 In the above example only  `friend_1` is able to call the function `get_age`.
 
 ### Entry function
-These functions are the one that users use to interact with modules
+These functions are the one that users use to interact with modules. Essentially, entry functions are the "main" functions of a module, and they specify where Move programs start executing.
 Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
 ```js   
     entry public fun setInformation(author: &signer,_name:string::String, _age:u64){
@@ -65,7 +71,7 @@ Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
 ```
 If public is removed from the function, other modules won't be able to call it but users will still be able to interact with the contract
 
-## Other important things
+## Other important thing
 ### Reading from storage
 If a module is reading from a global storage they should use the keyword `acquire` to gain access to the storage
 Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
@@ -85,7 +91,28 @@ Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
         }
     }
 ```
-*A function can acquire multiple structs and*
+*A function can acquire multiple structs*
+`acquires` annotations must also be added for transitive calls within the module.
+Example
+```js
+    module example {
+        struct Balance has key { value: u64 }
+
+        public fun add_balance(s: &signer, value: u64) {
+            move_to(s, Balance { value })
+        }
+
+        public fun extract_balance(addr: address): u64 acquires Balance {
+            let Balance { value } = move_from(addr); // acquires needed
+            value
+        }
+
+        public fun extract_and_add(sender: address, receiver: &signer) acquires Balance {
+            let value = extract_balance(sender); // acquires needed here
+            add_balance(receiver, value)
+        }
+    }
+```
 ### Returning a value
 If a function returns something it should specify the return type. Also, when returning data from function one should not use `;` 
 Example: In file [friend_2.move](/demos/functions/sources/friend_2.move)
@@ -103,6 +130,25 @@ When a module calls another module function it should mention the location of th
 Example: In file [friend_3.move](/demos/functions/sources/friend_3.move)
 ```js
     friends::friend_2::setInformation(test_addr,string::utf8(b"Move"),21);
+```
+
+### Naming Convention
+Function names can start with letters a to z or letters A to Z. After the first character, function names can contain underscores _, letters a to z, letters A to Z, or digits 0 to 9.
+```js
+fun FOO() {}
+fun bar_42() {}
+fun _bAZ19() {} // Invalid function name '_bAZ19'Function names cannot start with '_'
+```
+
+### Native functions
+Some functions do not have a body specified, and instead have the body provided by the VM. These functions are marked native.
+
+Without modifying the VM source code, a programmer cannot add new native functions. Furthermore, it is the intent that native functions are used for either standard library code or for functionality needed for the given Move environment
+```
+module std::vector {
+    native public fun empty<Element>(): vector<Element>;
+    ...
+}
 ```
 
 ## Summary
