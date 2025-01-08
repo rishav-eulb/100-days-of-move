@@ -5,4 +5,4 @@
 
 | Network | Module Address |
 | ------- | -------------- |
-| Bardock | 0x6df2712934100776df0999a4213eb8ebb18667c0b9e5e4b8c279195fa8d79b59|
+| Bardock | 0xf340e7116e3e52b596cfbc1a9c125b8acd0707d2a6950f1e9c71a5d809644fd0|
