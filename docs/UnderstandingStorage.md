@@ -28,6 +28,9 @@ This should upgrade the existing code for our package. But upgrade? Yes, movemen
 
 1. The function signature for existing entry functions should remain unchanged.
 2. The struct for globally stored resources should be unchanged.
+3. One can add new modules in a package while upgrading on the same address, given that existing modules are unchanged.
+4. One can add new package while upgrading on same address by deploying that package separately.
+5. However, you can't deploy modules with same name under multiple packages which are present in same address.
 
 To know more about the rules and policies for package upgrade check out the [resources](#understanding-storage-resources).
 
