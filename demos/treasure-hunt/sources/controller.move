@@ -201,6 +201,7 @@ module TreasureHunt::controller {
         // First Chest is the owner of first gold coin
         assert!(object::is_owner(*first_coin_from_first_chest_object, first_chest_address), 6);
         assert!(total_coins_in_chest_by_type<GoldCoin>(aaron_address, first_chest_object) == 1, 7);
+        assert!(total_coins_in_chest_by_type<SilverCoin>(aaron_address, first_chest_object) == 0, 8);
 
 
         // Mint silver coin for aaron in second chest
@@ -208,10 +209,12 @@ module TreasureHunt::controller {
         let second_chest = borrow_global<TreasureChest>(second_chest_address);
         let first_coin_from_second_chest_object = vector::borrow(&second_chest.items, 0);
 
-        assert!(get_user_balance(aaron_address) == 85, 8);
+        assert!(get_user_balance(aaron_address) == 85, 9);
         // Second Chest is the owner of first silver coin
-        assert!(object::is_owner(*first_coin_from_second_chest_object, second_chest_address), 9);
-        assert!(total_coins_in_chest_by_type<SilverCoin>(aaron_address, second_chest_object) == 1, 10);
+        assert!(object::is_owner(*first_coin_from_second_chest_object, second_chest_address), 10);
+        assert!(total_coins_in_chest_by_type<GoldCoin>(aaron_address, first_chest_object) == 0, 11);
+        assert!(total_coins_in_chest_by_type<SilverCoin>(aaron_address, second_chest_object) == 1, 12);
+        
     }
 
 }
