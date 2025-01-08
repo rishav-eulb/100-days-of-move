@@ -212,7 +212,7 @@ module TreasureHunt::controller {
         assert!(get_user_balance(aaron_address) == 85, 9);
         // Second Chest is the owner of first silver coin
         assert!(object::is_owner(*first_coin_from_second_chest_object, second_chest_address), 10);
-        assert!(total_coins_in_chest_by_type<GoldCoin>(aaron_address, first_chest_object) == 0, 11);
+        assert!(total_coins_in_chest_by_type<GoldCoin>(aaron_address, second_chest_object) == 0, 11);
         assert!(total_coins_in_chest_by_type<SilverCoin>(aaron_address, second_chest_object) == 1, 12);
         
     }
