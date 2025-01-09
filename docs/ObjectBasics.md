@@ -156,7 +156,15 @@ To add the `coin_object` to list of treasure_chest items. As stated earlier the 
 
 ## Summary
 
-In today's session we talked about 
+In today's session we talked about -
+
+- How to create Objects.
+- How to store resources under objects address.
+- How to retrieve resources from a given object.
+- How to check ownership of an Object.
+- How to transfer ownership of an Object.
+
+In future, we are going to talk in much more detail about various `Refs` provided by the Object framework to manage various actions we can perform on an object address. We will also discuss about how to extend a given object and add new resources and delete an object address altogether.
 
 ## Resources
 
@@ -164,4 +172,4 @@ In today's session we talked about
 - [Accounts](https://aptos.dev/en/network/blockchain/accounts)
 - [Creating Objects](https://aptos.dev/en/build/smart-contracts/object/creating-objects)
 - [Using Objects](https://aptos.dev/en/build/smart-contracts/object/using-objects)
-- [Vector
+- [Vector](https://aptos.dev/en/build/smart-contracts/vector)

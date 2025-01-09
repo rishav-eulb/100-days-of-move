@@ -17,3 +17,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 5 |  Move Basics: Variables, References and More  | [UnderstandingStorage.md](docs/UnderstandingStorage.md) | -
 | Day 6 | Functions | [Functions.md](docs/Functions.md) | [functions](demos/functions/)
 | Day 7 | Objects: Deployment and Motivation | [DemystifyingObjects.md](docs/DemystifyingObjects.md) | [treasure-hunt](demos/treasure-hunt/)
+| Day 8 | Object Basics: Creation and Ownership | [ObjectBasics.md](docs/ObjectBasics.md) | [treasure-hunt](demos/treasure-hunt/)
