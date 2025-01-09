@@ -37,9 +37,38 @@ module TreasureHunt::controller {
         borrow_global_mut<UserDetail>(sender_address)
     }
 
+    inline fun fetch_treasure_chest_from_object_with_sender_address(sender_address: address, chest_object: Object<TreasureChest>): &mut TreasureChest acquires TreasureChest {
+        assert!(object::is_owner(chest_object, sender_address), error::permission_denied(E_NOT_OWNER));
+
+        let chest_object_address = object::object_address(&chest_object);
+        borrow_global_mut<TreasureChest>(chest_object_address)
+    }
+
     inline fun fetch_user_detail(sender: &signer): &mut UserDetail acquires UserDetail {
         let sender_address = signer::address_of(sender);
         fetch_user_detail_from_address(sender_address)
+    }
+
+    inline fun fetch_treasure_chest_from_object(sender: &signer, chest_object: Object<TreasureChest>): &mut TreasureChest acquires TreasureChest {
+        let sender_address = signer::address_of(sender);
+        fetch_treasure_chest_from_object_with_sender_address(sender_address, chest_object)
+    }
+
+    inline fun create_object<T: key>(sender: &signer, resource: T): Object<T> {
+        let sender_address = signer::address_of(sender);
+
+        // Reserves address_space in global storage
+        // Provides reference to add resources to that address.
+        let constructor_ref = &object::create_object(sender_address);
+
+        // Get signer from the reference
+        let object_creator_signer = &object::generate_signer(constructor_ref);
+
+        // Move resource to the address space belonging to the object.
+        move_to<T>(object_creator_signer, resource);
+
+        // Return an Object Wrapper around that resource.
+        object::object_from_constructor_ref<T>(constructor_ref)
     }
 
     #[view]
@@ -52,10 +81,7 @@ module TreasureHunt::controller {
 
     #[view]
     public fun total_coins_in_chest_by_type<T: key>(sender_address: address, chest_object: Object<TreasureChest>): u64 acquires TreasureChest {
-        assert!(object::is_owner(chest_object, sender_address), error::permission_denied(E_NOT_OWNER));
-
-        let chest_object_address = object::object_address(&chest_object);
-        let chest = borrow_global<TreasureChest>(chest_object_address);
+        let chest = fetch_treasure_chest_from_object_with_sender_address(sender_address, chest_object);
 
         let coin_count: u64 = 0;
         vector::for_each(chest.items, |item| {
@@ -67,7 +93,6 @@ module TreasureHunt::controller {
 
         coin_count
     }
-
 
     #[view]    
     public fun get_user_balance(sender: address): u64 acquires UserDetail {
@@ -91,7 +116,6 @@ module TreasureHunt::controller {
 
     // Creates a treasure chest
     public entry fun create_treasure_for_user(sender: &signer) acquires UserDetail {
-        let sender_address = signer::address_of(sender);
         let user_detail = fetch_user_detail(sender);
 
         assert!(
@@ -101,18 +125,9 @@ module TreasureHunt::controller {
 
         user_detail.balance = user_detail.balance - TREASURE_HUNT_CREATION_COST;
 
-        // Reserves address_space in global storage
-        // Provides reference to add resources to that address.
-        let treasure_chest_constructor_ref = &object::create_object(sender_address);
-
-        // Get signer from the reference
-        let treasure_chest_creator_signer = &object::generate_signer(treasure_chest_constructor_ref);
-
-        move_to<TreasureChest>(treasure_chest_creator_signer, TreasureChest {
+        let treasure_chest_object = create_object(sender, TreasureChest {
             items: vector::empty<Object<ObjectCore>>()
         });
-
-        let treasure_chest_object = object::object_from_constructor_ref<TreasureChest>(treasure_chest_constructor_ref);
 
         vector::push_back(&mut user_detail.chests, treasure_chest_object);
     }
@@ -124,10 +139,8 @@ module TreasureHunt::controller {
         else abort error::invalid_argument(E_INVALID_ASSET_ID);
 
         let user_detail = fetch_user_detail(sender);
-        let sender_address = signer::address_of(sender);
+        let treasure_chest = fetch_treasure_chest_from_object(sender, chest_object);
 
-        // Check is sender is the actual owner of chest_object
-        assert!(object::is_owner(chest_object, sender_address), error::permission_denied(E_NOT_OWNER));
         assert!(
             user_detail.balance >= coin_minting_cost, 
             error::aborted(E_INSUFFICENT_BALANCE)
@@ -135,29 +148,22 @@ module TreasureHunt::controller {
 
         user_detail.balance = user_detail.balance - coin_minting_cost;
 
-        // Fetch TreasureChest from TreasureChest object
-        let chest_object_address = object::object_address(&chest_object);
-        let chest = borrow_global_mut<TreasureChest>(chest_object_address);
-
-        // Reserves address_space in global storage
-        // Provides reference to add resources to that address.
-        let coin_constructor_ref = &object::create_object(sender_address);
-
-        // Get signer from the reference
-        let coin_creator_signer = &object::generate_signer(coin_constructor_ref);
+        let coin_object: Object<ObjectCore>;
         if (asset_id == 1) {
-            move_to(coin_creator_signer, SilverCoin{});
+            let silver_coin_object = create_object(sender, SilverCoin{});
+            coin_object = object::convert(silver_coin_object);
         } else if (asset_id == 2) {
-            move_to(coin_creator_signer, GoldCoin{});
+            let gold_coin_object = create_object(sender, GoldCoin{});
+            coin_object = object::convert(gold_coin_object);
+        } else {
+            abort error::invalid_argument(E_INVALID_ASSET_ID)
         };
 
-        // Rather than adding Object<SilverCoin> or Object<GoldCoin> we use ObjectCore as a generic representation
-        let coin_object = object::object_from_constructor_ref<ObjectCore>(coin_constructor_ref);
-
-        // Transfer the ownership to treasure chest which is indirectly owned by the same sender.
+        // Transfer the ownership to treasure chest.
         object::transfer_to_object(sender, coin_object, chest_object);
 
-        vector::push_back(&mut chest.items, coin_object);
+        // Add the coin object to the chest.
+        vector::push_back(&mut treasure_chest.items, coin_object);
     }
 
     public entry fun mint_silver_coin_for_treasure(sender: &signer, chest_object: Object<TreasureChest>) acquires UserDetail, TreasureChest {
