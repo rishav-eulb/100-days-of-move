@@ -76,6 +76,14 @@ movement move run-script --compiled-script-path build/TreasureHunt/bytecode_scri
 
 ![](assets/20250110_192502_image.png)
 
+## Summary
+
+Today, we talked about.
+
+- How to upgrade packages deployed using objects.
+- Introduction to Scripts.
+- Compilation and Invocation of Scripts.
+
 ## Resources
 
 - [Scripts Structure](https://aptos.dev/en/build/smart-contracts/book/modules-and-scripts#scripts)
