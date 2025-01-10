@@ -1,0 +1,18 @@
+[package]
+name = "TreasureHunt"
+version = "1.0.0"
+authors = []
+
+[addresses]
+aptos_framework = "0x1"
+TreasureHunt = "0xf340e7116e3e52b596cfbc1a9c125b8acd0707d2a6950f1e9c71a5d809644fd0"
+
+[dev-addresses]
+TreasureHunt = "0x2"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dev-dependencies]
