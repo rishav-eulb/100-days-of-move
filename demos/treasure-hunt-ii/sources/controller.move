@@ -22,6 +22,8 @@ module TreasureHunt::controller {
         transfer_ref: object::TransferRef // Ref for transferring ownership
     }
 
+    struct Trophy has key {}
+
     struct UserDetailV2 has key {
         balance: u64,
         chests: vector<Object<TreasureChestStore>>
@@ -32,14 +34,16 @@ module TreasureHunt::controller {
     const E_INSUFFICENT_BALANCE: u64 = 3;
     const E_INVALID_ASSET_ID: u64 = 4;
     const E_NOT_OWNER: u64 = 5;
+    const E_CHEST_NOT_FOUND: u64 = 6;
 
     const USER_INITIAL_BALANCE: u64 = 100;
 
     const TREASURE_HUNT_CREATION_COST: u64 = 5;
     const TREASURE_GOLD_COIN_PRICE: u64 = 3;
     const TREASURE_SILVER_COIN_PRICE: u64 = 2;
+    const TREASURE_TROPHY_PRICE: u64 = 10;
 
-    inline fun fetch_user_detail_from_address(sender_address: address): &mut UserDetailV2 acquires UserDetail {
+    inline fun fetch_user_detail_from_address(sender_address: address): &mut UserDetailV2 acquires UserDetailV2 {
         assert!(
             exists<UserDetailV2>(sender_address),
             error::not_found(E_USER_NOT_FOUND)
@@ -55,6 +59,13 @@ module TreasureHunt::controller {
         borrow_global_mut<TreasureChest>(chest_object_address)
     }
 
+    inline fun fetch_treasure_chest_store_from_object_with_sender_address(sender_address: address, chest_object: Object<TreasureChest>): &mut TreasureChestStore acquires TreasureChestStore {
+        assert!(object::is_owner(chest_object, sender_address), error::permission_denied(E_NOT_OWNER));
+
+        let chest_object_address = object::object_address(&chest_object);
+        borrow_global_mut<TreasureChestStore>(chest_object_address)
+    }
+
     inline fun fetch_user_detail(sender: &signer): &mut UserDetailV2 acquires UserDetailV2 {
         let sender_address = signer::address_of(sender);
         fetch_user_detail_from_address(sender_address)
@@ -63,6 +74,11 @@ module TreasureHunt::controller {
     inline fun fetch_treasure_chest_from_object(sender: &signer, chest_object: Object<TreasureChest>): &mut TreasureChest acquires TreasureChest {
         let sender_address = signer::address_of(sender);
         fetch_treasure_chest_from_object_with_sender_address(sender_address, chest_object)
+    }
+
+    inline fun fetch_treasure_chest_store_from_object(sender: &signer, chest_object: Object<TreasureChest>): &mut TreasureChestStore acquires TreasureChestStore {
+        let sender_address = signer::address_of(sender);
+        fetch_treasure_chest_store_from_object_with_sender_address(sender_address, chest_object)
     }
 
     inline fun create_object<T: key>(sender: &signer, resource: T): (Object<T>, &object::ConstructorRef) {
@@ -105,6 +121,27 @@ module TreasureHunt::controller {
         });
 
         coin_count
+    }
+
+    #[view]
+    public fun total_treasure_cost(sender_address: address, chest_object: Object<TreasureChest>): u64 acquires TreasureChest {
+        let balance: u64 = TREASURE_HUNT_CREATION_COST;
+        let chest_object_address = object::object_address(&chest_object);
+
+        if(object::object_exists<Trophy>(chest_object_address)) balance = balance + TREASURE_TROPHY_PRICE;
+
+        let chest = fetch_treasure_chest_from_object_with_sender_address(sender_address, chest_object);
+        
+        vector::for_each(chest.items, |coin| {
+            let coin_address = object::object_address(&coin);
+            if(object::object_exists<SilverCoin>(coin_address)) {
+                balance = balance + TREASURE_SILVER_COIN_PRICE;
+            } else if(object::object_exists<GoldCoin>(coin_address)) {
+                balance = balance + TREASURE_GOLD_COIN_PRICE;
+            }
+        });
+
+        balance
     }
 
     #[view]    
@@ -204,6 +241,85 @@ module TreasureHunt::controller {
         vector::push_back(&mut user_detail.chests, treasure_chest_store_object);
     }
 
+    public entry fun mint_trophy_for_treasure(sender: &signer, chest_object: Object<TreasureChest>) acquires UserDetailV2, TreasureChestStore {
+        let user_detail = fetch_user_detail(sender);
+
+        let chest_object_address = object::object_address(&chest_object);
+
+        if(object::object_exists<Trophy>(chest_object_address)) return ();
+        assert!(
+            user_detail.balance >= TREASURE_TROPHY_PRICE, 
+            error::aborted(E_INSUFFICENT_BALANCE)
+        );
+
+        let treasure_chest_store = fetch_treasure_chest_store_from_object(sender, chest_object);
+
+        // Generate a signer to the same object address using ExtendRef
+        let trophy_creator_signer = &object::generate_signer_for_extending(&treasure_chest_store.extend_ref);
+
+        move_to(trophy_creator_signer, Trophy{});
+        user_detail.balance = user_detail.balance - TREASURE_TROPHY_PRICE;
+    }
+
+    public entry fun burn_treasure(sender: &signer, chest_object: Object<TreasureChest>) acquires UserDetailV2, TreasureChest, TreasureChestStore, Trophy {
+        let user_detail = fetch_user_detail(sender);
+        let sender_address = signer::address_of(sender);
+
+        assert!(object::is_owner(chest_object, sender_address), error::permission_denied(E_NOT_OWNER));
+        let treasure_chest_store_address = object::object_address(&chest_object);
+        let treasure_chest_store_object: Object<TreasureChestStore> = object::convert(chest_object);
+
+        let (chest_exist, chest_index) = vector::index_of(&user_detail.chests, &treasure_chest_store_object);
+        assert!(chest_exist, error::not_found(E_CHEST_NOT_FOUND));
+
+        let chest_balance = total_treasure_cost(sender_address, chest_object); 
+
+        // Delete and unpack  all the existing resources.
+        let TreasureChestStore{delete_ref, extend_ref: _, transfer_ref: _} = move_from<TreasureChestStore>(treasure_chest_store_address);
+        let TreasureChest{items: _} = move_from<TreasureChest>(treasure_chest_store_address);
+
+        if(exists<Trophy>(treasure_chest_store_address)) {
+            let Trophy{} = move_from<Trophy>(treasure_chest_store_address);
+        };
+
+        vector::remove(&mut user_detail.chests, chest_index);
+
+        // Restore the balance for the resources burned
+        user_detail.balance = user_detail.balance + chest_balance;
+
+        // Delete the object from address
+        object::delete(delete_ref);
+    }
+
+    public entry fun transfer_treasure(sender: &signer, chest_object: Object<TreasureChest>, to: address) acquires UserDetailV2, TreasureChest, TreasureChestStore {
+        let user_detail = fetch_user_detail(sender);
+        let to_user_detail = fetch_user_detail_from_address(to);
+        let sender_address = signer::address_of(sender);
+
+        let treasure_chest_store = fetch_treasure_chest_store_from_object(sender, chest_object);
+        let treasure_chest_store_object: Object<TreasureChestStore> = object::convert(chest_object);
+
+        let (chest_exist, chest_index) = vector::index_of(&user_detail.chests, &treasure_chest_store_object);
+        assert!(chest_exist, error::not_found(E_CHEST_NOT_FOUND));
+
+        let chest_balance = total_treasure_cost(sender_address, chest_object); 
+        assert!(to_user_detail.balance >= chest_balance, error::aborted(E_INSUFFICENT_BALANCE));
+
+        // Transfer ownership using LinearTransferRef
+        let linear_transfer_ref = object::generate_linear_transfer_ref(&treasure_chest_store.transfer_ref);
+        object::transfer_with_ref(linear_transfer_ref, to);
+        
+        // Remove the treasure chest from existing user
+        vector::remove(&mut user_detail.chests, chest_index);
+
+        // Restore the balance for the resources burned for old user
+        user_detail.balance = user_detail.balance + chest_balance;
+
+        // Burn the balance for new user
+        to_user_detail.balance = to_user_detail.balance - chest_balance;
+        vector::push_back(&mut to_user_detail.chests, treasure_chest_store_object);
+    }
+
     fun mint_coin_for_chest(sender: &signer, chest_object: Object<TreasureChest>, asset_id: u8) acquires UserDetailV2, TreasureChest  {
         let coin_minting_cost: u64;
         if (asset_id == 1) coin_minting_cost = TREASURE_SILVER_COIN_PRICE
@@ -221,11 +337,14 @@ module TreasureHunt::controller {
         user_detail.balance = user_detail.balance - coin_minting_cost;
 
         let coin_object: Object<ObjectCore>;
+        let coin_creator_ref: &object::ConstructorRef;
         if (asset_id == 1) {
-            let (silver_coin_object, _) = create_object(sender, SilverCoin{});
+            let silver_coin_object: Object<SilverCoin>;
+            (silver_coin_object, coin_creator_ref) = create_object(sender, SilverCoin{});
             coin_object = object::convert(silver_coin_object);
         } else if (asset_id == 2) {
-            let (gold_coin_object, _) = create_object(sender, GoldCoin{});
+            let gold_coin_object: Object<GoldCoin>;
+            (gold_coin_object, coin_creator_ref) = create_object(sender, GoldCoin{});
             coin_object = object::convert(gold_coin_object);
         } else {
             abort error::invalid_argument(E_INVALID_ASSET_ID)
@@ -233,6 +352,9 @@ module TreasureHunt::controller {
 
         // Transfer the ownership to treasure chest.
         object::transfer_to_object(sender, coin_object, chest_object);
+
+        // Remove transferrable privileges for coin.
+        object::set_untransferable(coin_creator_ref);
 
         // Add the coin object to the chest.
         vector::push_back(&mut treasure_chest.items, coin_object);
