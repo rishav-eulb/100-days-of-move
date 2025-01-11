@@ -300,6 +300,7 @@ module TreasureHunt::controller {
 
         let (chest_exist, chest_index) = vector::index_of(&user_detail.chests, &treasure_chest_store_object);
         assert!(chest_exist, error::not_found(E_CHEST_NOT_FOUND));
+        let chest_balance = total_treasure_cost(sender_address, chest_object);
 
         // Transfer ownership using LinearTransferRef
         let linear_transfer_ref = object::generate_linear_transfer_ref(&treasure_chest_store.transfer_ref);
@@ -307,8 +308,6 @@ module TreasureHunt::controller {
         
         // Remove the treasure chest from existing user
         vector::remove(&mut user_detail.chests, chest_index);
-
-        let chest_balance = total_treasure_cost(sender_address, chest_object);
 
         // Restore the balance for the resources burned for old user
         user_detail.balance = user_detail.balance + chest_balance;
@@ -416,6 +415,81 @@ module TreasureHunt::controller {
         assert!(total_coins_in_chest_by_type<GoldCoin>(aaron_address, second_chest_object) == 0, 11);
         assert!(total_coins_in_chest_by_type<SilverCoin>(aaron_address, second_chest_object) == 1, 12);
         
+    }
+
+    #[test(aaron = @0xcafe)]
+    fun test_mint_trophy_flow(aaron: &signer) acquires UserDetailV2, TreasureChestStore {
+        let aaron_address = signer::address_of(aaron);
+
+        // Register aaron to treasure chest.
+        create_user(aaron);
+
+        // Create treasure chest for aaron.
+        create_treasure_for_user(aaron);
+        let chest_object = get_chest_object_by_index(aaron_address, 0);
+        let chest_object_address = object::object_address(&chest_object);
+        assert!(get_user_balance(aaron_address) == 95, 1);
+
+        assert!(!object::object_exists<Trophy>(chest_object_address), 2);
+        mint_trophy_for_treasure(aaron, chest_object);
+        assert!(get_user_balance(aaron_address) == 85, 3);
+
+        // Trophy object present at aaron's address
+        let trophy_object: Object<Trophy> = object::convert(chest_object);
+        assert!(object::object_exists<Trophy>(chest_object_address), 4);
+        assert!(object::is_owner(trophy_object, aaron_address), 5);
+
+    }
+
+    #[test(aaron = @0xcafe)]
+    fun test_burn_treasure_flow(aaron: &signer) acquires UserDetailV2, TreasureChest, TreasureChestStore, Trophy {
+        let aaron_address = signer::address_of(aaron);
+
+        // Register aaron to treasure chest.
+        create_user(aaron);
+
+        // Create treasure chest for aaron.
+        create_treasure_for_user(aaron);
+        let chest_object = get_chest_object_by_index(aaron_address, 0);
+        let chest_object_address = object::object_address(&chest_object);
+        assert!(get_user_balance(aaron_address) == 95, 1);
+
+        burn_treasure(aaron, chest_object);
+        assert!(!object::object_exists<TreasureChest>(chest_object_address), 2);
+        assert!(!object::object_exists<TreasureChestStore>(chest_object_address), 3);
+        assert!(!object::object_exists<Trophy>(chest_object_address), 4);
+        assert!(get_user_balance(aaron_address) == 100, 1);
+
+        let user_detail = fetch_user_detail(aaron);
+        assert!(vector::length(&user_detail.chests) == 0, 5);
+    }
+
+    #[test(aaron = @0xcafe, bob = @0xface)]
+    fun test_transfer_treasure_flow(aaron: &signer, bob: &signer) acquires UserDetailV2, TreasureChest, TreasureChestStore {
+        let aaron_address = signer::address_of(aaron);
+        let bob_address = signer::address_of(bob);
+
+        create_user(aaron);
+        create_user(bob);
+
+        create_treasure_for_user(aaron);
+        let chest_object = get_chest_object_by_index(aaron_address, 0);
+        mint_trophy_for_treasure(aaron, chest_object);
+        assert!(get_user_balance(aaron_address) == 85, 1);
+
+        transfer_treasure(aaron, chest_object, bob_address);
+        assert!(object::is_owner(chest_object, bob_address), 2); // Check TreasureChest is transferred
+        assert!(object::is_owner(object::convert<TreasureChest, TreasureChestStore>(chest_object), bob_address), 3); // Check TreasureChestStore is transferred
+        assert!(object::is_owner(object::convert<TreasureChest, Trophy>(chest_object), bob_address), 4); // Check Trophy is transferred
+        
+        assert!(get_user_balance(aaron_address) == 100, 5);
+        assert!(get_user_balance(bob_address) == 85, 6);
+
+        let user_detail = fetch_user_detail(aaron);
+        assert!(vector::length(&user_detail.chests) == 0, 7);
+
+        let to_user_detail = fetch_user_detail(bob);
+        assert!(vector::length(&to_user_detail.chests) == 1, 8);
     }
 
 }
