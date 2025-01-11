@@ -73,7 +73,7 @@ object::set_untransferable(coin_creator_ref);
 
 ```
 
-## Minting Trophies
+### Minting Trophies
 
 In our package we have given the capability for the users to mint trophy for a given treasure chest. This operation is expensive as it as cost of `10` units so user's can opt to do it for a specific treasure chest using `mint_trophy_for_treasure`. In order to understand how to use `ExtendRef`we can see this function in detail.
 
@@ -162,7 +162,7 @@ We call the `delete` function which takes in `DeleteRef`. This function then del
 
 _If there is any resource present in the deleted address, those resources can still be accessed using global operators. However, running any object functions will throw an error._
 
-### Transfering Treasures
+### Transferring Treasures
 
 Lastly users can transfer treasures from one user to other. This is a 2-step process as shown in the `transfer_treasure` function.
 
