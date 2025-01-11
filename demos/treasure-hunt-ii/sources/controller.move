@@ -293,7 +293,6 @@ module TreasureHunt::controller {
 
     public entry fun transfer_treasure(sender: &signer, chest_object: Object<TreasureChest>, to: address) acquires UserDetailV2, TreasureChest, TreasureChestStore {
         let user_detail = fetch_user_detail(sender);
-        let to_user_detail = fetch_user_detail_from_address(to);
         let sender_address = signer::address_of(sender);
 
         let treasure_chest_store = fetch_treasure_chest_store_from_object(sender, chest_object);
@@ -302,9 +301,6 @@ module TreasureHunt::controller {
         let (chest_exist, chest_index) = vector::index_of(&user_detail.chests, &treasure_chest_store_object);
         assert!(chest_exist, error::not_found(E_CHEST_NOT_FOUND));
 
-        let chest_balance = total_treasure_cost(sender_address, chest_object); 
-        assert!(to_user_detail.balance >= chest_balance, error::aborted(E_INSUFFICENT_BALANCE));
-
         // Transfer ownership using LinearTransferRef
         let linear_transfer_ref = object::generate_linear_transfer_ref(&treasure_chest_store.transfer_ref);
         object::transfer_with_ref(linear_transfer_ref, to);
@@ -312,10 +308,15 @@ module TreasureHunt::controller {
         // Remove the treasure chest from existing user
         vector::remove(&mut user_detail.chests, chest_index);
 
+        let chest_balance = total_treasure_cost(sender_address, chest_object);
+
         // Restore the balance for the resources burned for old user
         user_detail.balance = user_detail.balance + chest_balance;
 
         // Burn the balance for new user
+        let to_user_detail = fetch_user_detail_from_address(to);
+        assert!(to_user_detail.balance >= chest_balance, error::aborted(E_INSUFFICENT_BALANCE));
+        
         to_user_detail.balance = to_user_detail.balance - chest_balance;
         vector::push_back(&mut to_user_detail.chests, treasure_chest_store_object);
     }
