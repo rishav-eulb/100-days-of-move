@@ -1,4 +1,4 @@
-# Object Basics: Understanding Refs
+# Object Basics: Refs And More
 
 Till now, we talked about how to create and use objects. However, when it comes to building secure applications we also need to determine what all behaviours are possible on a set of objects. Let's walkthrough our new [codebase](../demos/treasure-hunt-ii) to understand it in depth.
 
