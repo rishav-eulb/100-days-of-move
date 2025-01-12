@@ -20,4 +20,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 8 | Object Basics: Creation and Ownership | [ObjectBasics.md](docs/ObjectBasics.md) | [treasure-hunt](demos/treasure-hunt/)
 | Day 9 | Using Scripts | [UsingScripts.md](docs/UsingScripts.md) | [treasure-hunt-ii](demos/treasure-hunt-ii/)
 | Day 10 | Object Basics: Refs And More| [ObjectBasicsII.md](docs/ObjectBasicsII.md) | [treasure-hunt-ii](demos/treasure-hunt-ii/)
-| Day 10 | Introduction To Vectors| [VectorBasics.md](docs/VectorBasics.md) |
+| Day 11 | Introduction To Vectors| [UsingVectors.md](docs/UsingVectors.md) |
