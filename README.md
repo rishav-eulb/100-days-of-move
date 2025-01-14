@@ -22,3 +22,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 10 | Object Basics: Refs And More| [ObjectBasicsII.md](docs/ObjectBasicsII.md) | [treasure-hunt-ii](demos/treasure-hunt-ii/)
 | Day 11 | Introduction To Vectors| [UsingVectors.md](docs/UsingVectors.md) |
 | Day 12 | Introduction To Smart Vectors| [UsingSmartVectors.md](docs/UsingSmartVectors.md) |
+| Day 13 | Introduction To Smart Tables| [UsingSmartTables.md](docs/UsingSmartTables.md) |
