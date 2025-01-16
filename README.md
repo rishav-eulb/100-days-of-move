@@ -24,3 +24,4 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 12 | Introduction To Smart Vectors| [UsingSmartVectors.md](docs/UsingSmartVectors.md) |
 | Day 13 | Introduction To Smart Tables| [UsingSmartTables.md](docs/UsingSmartTables.md) |
 | Day 14 | Introduction To Strings| [UsingStrings.md](docs/UsingStrings.md) |
+| Day 14 | Introduction To Fungible Assets| [FungibleAssetsBasicsI.md](docs/FungibleAssetsBasicsI.md) | [fa-minter](demos/fa-minter/)
