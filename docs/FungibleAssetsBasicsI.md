@@ -71,11 +71,15 @@ movement move view --function-id 0x1::primary_fungible_store::balance \
 --type-args 0x1::fungible_asset::Metadata
 ```
 
-Here the metadata 
+Here the metadata address can be fetched from the `get_metadata` function.
+
+## Summary
+
+Today, we discussed about various token standard present in Movement Ecosystem. We also talked about Fungible Asset standard in brief and discussed the utility of various functions in [FAMinter](../demos/fa-minter/) package. Moving on we are going to discuss the `FAMinter` package in greater depth and also talk about how to make DApps using the Fungible Asset Standard.
 
 ## Resources
 
 - [Assets in Aptos](https://aptos.dev/en/build/smart-contracts/digital-asset)
 - [Creating Fungible Assets](https://aptos.dev/en/build/smart-contracts/fungible-asset#creating-a-new-fungible-asset-fa)
-- [Fungible Assets Uilities](https://aptos.dev/en/build/smart-contracts/fungible-asset#reference-docs)
+- [Fungible Assets Utilities](https://aptos.dev/en/build/smart-contracts/fungible-asset#reference-docs)
 - [Fungible Asset Source Code](https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/aptos-framework/sources/fungible_asset.move)
