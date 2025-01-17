@@ -129,9 +129,9 @@ We perform the following steps.
   - This function derives an object address using the user's address and FA metadata address.
   - Then it creates a `FungibleStore` resource at the given address.
   - `FungibleStore` stores the balance the user for a given FA. Note that, the user for which the store is created is the actual owner of the object address. This ensures, that user has complete control over the store object.
-- Once we get the `FungibleStore`, we can then pass the `MintRef` to `fungible_asset::mint` function to mint FAs on the `to` user address.
+- Once we get the `FungibleStore`, we can then pass the `MintRef` to `fungible_asset::mint_to` function to mint FAs on the `to` user address.
 
-Creators can perform same steps to burn FAs from a user's account just by using `BurnRef` and `fungible_asset::burn` function respectively. Refer to `burn` function in [token_minter.move](../demos/fa-minter/sources/token_minter.move).
+Creators can perform same steps to burn FAs from a user's account just by using `BurnRef` and `fungible_asset::burn_from` function respectively. Refer to `burn` function in [token_minter.move](../demos/fa-minter/sources/token_minter.move).
 
 ### Token Guardrails
 
