@@ -14,7 +14,7 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 2 | Writing Your First Move Package | [HelloMove.md](docs/HelloMove.md) | [hello-move](demos/hello-move/)
 | Day 3 | Publishing Your First Move Package | [PublishPackage.md](docs/PublishPackage.md) | [hello-move](demos/hello-move/)
 | Day 4 | Understanding Storage | [UnderstandingStorage.md](docs/UnderstandingStorage.md) | [hello-move-ii](demos/hello-move-ii/)
-| Day 5 |  Move Basics: Variables, References and More  | [UnderstandingStorage.md](docs/UnderstandingStorage.md) | -
+| Day 5 |  Move Basics: Variables, References and More  | [VariablesBasics.md](docs/VariablesBasics.md) | -
 | Day 6 | Functions | [Functions.md](docs/Functions.md) | [functions](demos/functions/)
 | Day 7 | Objects: Deployment and Motivation | [DemystifyingObjects.md](docs/DemystifyingObjects.md) | [treasure-hunt](demos/treasure-hunt/)
 | Day 8 | Object Basics: Creation and Ownership | [ObjectBasics.md](docs/ObjectBasics.md) | [treasure-hunt](demos/treasure-hunt/)
@@ -24,4 +24,5 @@ This repo contains the code and the instructions to get started with Move Langua
 | Day 12 | Introduction To Smart Vectors| [UsingSmartVectors.md](docs/UsingSmartVectors.md) |
 | Day 13 | Introduction To Smart Tables| [UsingSmartTables.md](docs/UsingSmartTables.md) |
 | Day 14 | Introduction To Strings| [UsingStrings.md](docs/UsingStrings.md) |
-| Day 14 | Introduction To Fungible Assets| [FungibleAssetsBasicsI.md](docs/FungibleAssetsBasicsI.md) | [fa-minter](demos/fa-minter/)
+| Day 15 | Introduction To Fungible Assets| [FungibleAssetsI.md](docs/FungibleAssetsI.md) | [fa-minter](demos/fa-minter/)
+| Day 16 | Fungible Assets: Creation, Control and Supply| [FungibleAssetsII.md](docs/FungibleAssetsII.md) | [fa-minter](demos/fa-minter/)
