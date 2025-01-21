@@ -40,4 +40,3 @@ The Eliza framework is inspired by ELIZA, one of the first chatbot programs crea
 - **🎓 Educational Tools**: Build educational tutors or assistants that can provide information, answer questions, and facilitate learning for students. 
 - **🔍 Research Assistants**: Create agents that can gather, analyze, and summarize information from various sources, supporting research and development activities. 
 
-The Eliza framework empowers developers to build versatile and intelligent AI agents tailored to a wide array of applications, streamlining processes and enhancing user experiences across different domains. 
