@@ -17,9 +17,7 @@
 ### Overview
 The Eliza framework is a modern, open-source platform designed to facilitate the development and deployment of autonomous AI agents. Inspired by the original ELIZA chatbot from the 1960s, this framework is tailored for contemporary applications, especially within the Web3 ecosystem.
 
-## Key Features
-
-### Core Components
+### Key Features
 - **Model Integration**: Plug-and-play support for Llama, Grok, OpenAI, Anthropic, and Gemini
 - **Connector System**: Multi-platform support (Discord, Twitter, Telegram) through unified API
 - **Agent Management**: Deploy and orchestrate multiple agents with distinct personalities
