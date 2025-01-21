@@ -1,16 +1,15 @@
 [package]
-name = "HelloMove"
+name = "function"
 version = "1.0.0"
 authors = []
 
 [addresses]
 aptos_framework = "0x1"
 std = "0x1"
-HelloMove = "_"
+friends = "_"
 
 [dev-addresses]
-HelloMove = "0x2"
-
+friends = "0x2882dd6d383cd4fa39d82011f52653bf577deeb9b9418ead5faf20d83209f0fe"
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-core.git"

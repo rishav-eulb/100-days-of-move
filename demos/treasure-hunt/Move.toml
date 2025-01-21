@@ -1,16 +1,14 @@
 [package]
-name = "HelloMove"
+name = "TreasureHunt"
 version = "1.0.0"
 authors = []
 
 [addresses]
 aptos_framework = "0x1"
-std = "0x1"
-HelloMove = "_"
+TreasureHunt = "_"
 
 [dev-addresses]
-HelloMove = "0x2"
-
+TreasureHunt = "0x2"
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-core.git"
