@@ -1,4 +1,4 @@
-# 🤖 Eliza Framework
+# 🤖 Move Bot day 01: Understanding Eliza framework
 
 > Modern autonomous AI agent development platform, inspired by the historic ELIZA chatbot.
 
