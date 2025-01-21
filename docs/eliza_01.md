@@ -1,50 +1,28 @@
-# Eliza Framework 🤖
+# 🤖 Eliza Framework
 
-An open-source platform for developing autonomous AI agents, inspired by the historic ELIZA chatbot.
+> Modern autonomous AI agent development platform, inspired by the historic ELIZA chatbot.
 
-## 🌟 Overview
+## Understanding AI Systems
 
-Eliza Framework is a modern platform that enables developers to create, deploy, and manage autonomous AI agents. Built on the legacy of Joseph Weizenbaum's ELIZA, it provides a comprehensive suite of tools for AI agent development in today's technological landscape.
+### AI Models vs AI Agents
 
-## 🔍 Core Components
+| Feature | AI Models | AI Agents |
+|---------|-----------|-----------|
+| Nature | Passive word calculators | Active autonomous systems |
+| Operation | Waits for input to respond | Operates independently |
+| Context | Processes each input separately | Maintains conversation history |
+| Decision Making | Generates predictions based on input | Makes autonomous decisions |
+| Examples | GPT, Gemini | Eliza, Trading bots |
 
-### AI Model Integration
-- Support for multiple AI models including Llama, Grok, OpenAI, Anthropic, and Gemini
-- Flexible model switching capabilities
-- Standardized API interfaces
+## Key Features
 
-### Connector System
-- Multi-platform integration
-- Voice channel capabilities (Discord)
-- Social media platform support (Twitter, Telegram)
-- Unified communication interface
-
-### Agent Management
-- Multi-agent deployment system
-- Room-based interaction management
-- Customizable personality and knowledge bases
-- Behavior modification options
-
-### Document Processing
-- Multiple format support:
-  - PDF processing
-  - Link extraction
-  - Audio transcription
-  - Video analysis
-  - Image recognition
-- Integrated content analysis
-
-### Memory Architecture
-- RAG (Retrieval Augmented Generation) implementation
-- Persistent context maintenance
-- Historical interaction tracking
-- Dynamic memory management
-
-### Extension Framework
-- Custom action definition
-- Provider integration system
-- Evaluator implementation
-- Behavior modification capabilities
+### 🧠 Core Components
+- **Model Integration**: Plug-and-play support for Llama, Grok, OpenAI, Anthropic, and Gemini
+- **Connector System**: Multi-platform support (Discord, Twitter, Telegram) through unified API
+- **Agent Management**: Deploy and orchestrate multiple agents with distinct personalities
+- **Document Processing**: Handle PDFs, audio, video, and images with built-in analysis
+- **Memory System**: RAG-based architecture for persistent context and history
+- **Extension Framework**: Custom actions and behavior modification capabilities
 
 ## 🚀 Use Cases
 
