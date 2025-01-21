@@ -73,4 +73,11 @@ These applications demonstrate the versatility and transformative potential of A
 
 - [Official Documentation](https://elizaos.github.io/eliza/)
 - [Research Paper](https://arxiv.org/pdf/2501.06781)
+- https://cointelegraph.com/news/ai16z-eliza-white-paper-ai-agents
+- https://blog.griffinai.io/news/ai-agents-web3-2025
+- https://www.biconomy.io/post/ai-agents-transforming-the-web3-user-experience
+- https://blog.subquery.network/ai-agents-in-web3-from-hype-to-revolution/
+- https://www.voguebusiness.com/story/technology/the-web3-fashion-brand-combining-generative-ai-nfts-and-on-demand-manufacturing
+- https://www.cryptoglobe.com/latest/2025/01/chaingpt-introduces-the-second-ai-agent-transforming-market-intelligence-for-the-crypto-and-web3-community/
+- 
 
