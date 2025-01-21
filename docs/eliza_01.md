@@ -1,6 +1,8 @@
 # 🤖 Eliza Framework
 
 > Modern autonomous AI agent development platform, inspired by the historic ELIZA chatbot.
+### Overview
+The Eliza framework represents a modern revival of one of computing's historical milestones. Named after ELIZA, the pioneering chatbot from the 1960s created by Joseph Weizenbaum, this open-source platform modernizes autonomous AI agent development for today's needs.
 
 ## Understanding AI Systems
 
