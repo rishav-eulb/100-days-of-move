@@ -68,7 +68,6 @@ The Eliza framework represents a modern revival of one of computing's historical
    - **Automated Workflows**: They automate complex processes, reducing the learning curve for new users.
    - **Example**: Biconomy's AI agents transform the Web3 user experience by automating transactions and enhancing usability. 
 
-These applications demonstrate the versatility and transformative potential of AI agents in the Web3 ecosystem, paving the way for more efficient, engaging, and personalized digital experiences. 
 ## 📚 Resources
 
 - [Official Documentation](https://elizaos.github.io/eliza/)
