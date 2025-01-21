@@ -78,5 +78,5 @@ The Eliza framework represents a modern revival of one of computing's historical
 - https://blog.subquery.network/ai-agents-in-web3-from-hype-to-revolution/
 - https://www.voguebusiness.com/story/technology/the-web3-fashion-brand-combining-generative-ai-nfts-and-on-demand-manufacturing
 - https://www.cryptoglobe.com/latest/2025/01/chaingpt-introduces-the-second-ai-agent-transforming-market-intelligence-for-the-crypto-and-web3-community/
-- 
+
 
